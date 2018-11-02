@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "## Overview",
   "main": "index.js",
-  "engines" : { "node" : "version" },
+  "engines" : { "node" : "10.4.1" },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start" : "nodemon server.js"
