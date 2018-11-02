@@ -1,0 +1,24 @@
+{
+  "name": "301-lab06",
+  "version": "1.0.0",
+  "description": "## Overview",
+  "main": "index.js",
+  "engines" : { "node" : "version" },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bns568/301-lab06.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bns568/301-lab06/issues"
+  },
+  "homepage": "https://github.com/bns568/301-lab06#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
