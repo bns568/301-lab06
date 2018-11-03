@@ -16,3 +16,23 @@ require('dotenv').config()
 const app = express()
 
 app.use(cors())
+
+app.get('/location', (request, response) => {
+    const url = 'https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyDuOmBWsM_9Olsx9z4tjq9Gj_Vbmb7Dxy4&address=7600+Wisconsin+ave+bethesda+md'
+    superagent.get(url)
+      .then(res => response.send({
+        latitude: res.body.results[0].geometry.location.lat,
+        longitude: res.body.results[0].geometry.location.lng
+      }))
+      .catch(err => response.send('<img src="http://http.cat/404"/>'))
+  })
+
+  app.get('*', (request, response) => {
+    response.send('<img src="http://http.cat/500"/>')
+  })
+
+  const PORT = process.env.PORT || 3000
+
+  app.listen(PORT, () => {
+    console.log(`Server is now running on port ${PORT}`)
+  })
