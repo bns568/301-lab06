@@ -30,10 +30,13 @@ app.get('/location', (request, response) => {
 app.get('/weather', (request, response) => {
     const url = 'https://api.darksky.net/forecast/926bad7492c47794153864832ffd41aa/37.8267,-122.4233'
     superagent.get(url)
-      .then(res => response.send({
-        time: (parseInt(res.body.daily.data[0].time)*1000).toString(),
-        forecast: res.body.daily.data[0].summary
-      }))
+      .then(res => {
+        let day = new Date(parseInt(res.body.daily.data[0].time));
+        response.send({
+            time: day.toDateString(),
+            forecast: res.body.daily.data[0].summary
+        })
+      })
       .catch(err => response.send('<img src="http://http.cat/404"/>'))
 })
 
