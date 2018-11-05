@@ -25,11 +25,21 @@ app.get('/location', (request, response) => {
         longitude: res.body.results[0].geometry.location.lng
       }))
       .catch(err => response.send('<img src="http://http.cat/404"/>'))
-  })
+})
 
-  app.get('*', (request, response) => {
+app.get('/weather', (request, response) => {
+    const url = 'https://api.darksky.net/forecast/926bad7492c47794153864832ffd41aa/37.8267,-122.4233'
+    superagent.get(url)
+      .then(res => response.send({
+        time: res.body.daily.data[0].time,
+        forecast: res.body.daily.data[0].summary
+      }))
+      .catch(err => response.send('<img src="http://http.cat/404"/>'))
+})
+
+app.get('*', (request, response) => {
     response.send('<img src="http://http.cat/500"/>')
-  })
+})
 
   const PORT = process.env.PORT || 3000
 
