@@ -18,7 +18,7 @@ const app = express()
 app.use(cors())
 
 app.get('/location', (request, response) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.google_maps_api}&address=7600+Wisconsin+ave+bethesda+md`
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.google_maps_api}&address=${query}`
     superagent.get(url)
       .then(res => response.send({
         latitude: res.body.results[0].geometry.location.lat,
@@ -28,7 +28,7 @@ app.get('/location', (request, response) => {
 })
 
 app.get('/weather', (request, response) => {
-    const url = `https://api.darksky.net/forecast/${process.env.dark_skys_api}/37.8267,-122.4233`
+    const url = `https://api.darksky.net/forecast/${process.env.dark_skys_api}/${query}`
     superagent.get(url)
       .then(res => {
         let day = new Date(res.body.daily.data[0].time);
