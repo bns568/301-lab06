@@ -18,7 +18,7 @@ const app = express()
 app.use(cors())
 
 app.get('/location', (request, response) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?${process.env.google_maps_api}=7600+Wisconsin+ave+bethesda+md`
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.google_maps_api}=7600+Wisconsin+ave+bethesda+md`
     superagent.get(url)
       .then(res => response.send({
         latitude: res.body.results[0].geometry.location.lat,
