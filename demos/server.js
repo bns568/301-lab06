@@ -25,9 +25,7 @@ app.get('/location', (request, response) => {
       latitude: res.body.results[0].geometry.location.lat,
       longitude: res.body.results[0].geometry.location.lng
     }))
-    .catch(err => response.send('<img src="http://http.cat/404" />'))
-
-    
+    .catch(err => response.send('<img src="http://http.cat/404" />')) 
 })
 
 //listen for a get request at any route, this is a catch all, and send back an error

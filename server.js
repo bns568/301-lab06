@@ -17,14 +17,11 @@ const app = express()
 
 app.use(cors())
 
+//done refactoring
 app.get('/location', (request, response) => {
-    const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.google_maps_api}&address=${request.query.data}`
-    superagent.get(url)
-      .then(res => response.send({
-        latitude: res.body.results[0].geometry.location.lat,
-        longitude: res.body.results[0].geometry.location.lng
-      }))
-      .catch(err => response.send('<img src="http://http.cat/404"/>'))
+  getLocation(request.query.data)
+    .then(res => response.send(res))
+    .catch(err => response.send(handleError(err)))
 })
 
 app.get('/movies', (request, response) => {
@@ -43,8 +40,7 @@ app.get('/movies', (request, response) => {
 })
 
 app.get('/weather', (request, response) => {
-    const url = `https://api.darksky.net/forecast/${process.env.dark_skys_api}/${request.query.data}`
-    superagent.get(url)
+    getWeather(request.query.data)
       .then(res => {
         let day = new Date(res.body.daily.data[0].time);
         response.send({
@@ -75,6 +71,37 @@ app.get('*', (request, response) => {
 
   const PORT = process.env.PORT || 3000
 
-  app.listen(PORT, () => {
-    console.log(`Server is now running on port ${PORT}`)
-  })
+app.listen(PORT, () => {
+  console.log(`Server is now running on port ${PORT}`)
+})
+
+
+
+
+function getLocation(query) {
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?key=${process.env.google_maps_api}&address=${query}`
+
+  return superagent.get(url)
+    .then(res => {
+      return new Location(res.body.results[0].geometry.location.lat, res.body.results[0].geometry.location.lng)
+    })
+}
+
+function getWeather(query) {
+  const url = `https://api.darksky.net/forecast/${process.env.dark_skys_api}/${query}`
+  return superagent.get(url)
+    .then(res => {
+      return new Weather(res.body)
+    })
+}
+
+function Location(lat, lng) {
+  this.latitude = lat,
+  this.longitude = lng
+}
+
+//this is going to mess up because it does contain the date
+function Weather(WeatherObj) {
+  this.time = day.toDateString(),
+  this.forecast = res.body.daily.data[0].summary
+}
